@@ -1,3 +1,4 @@
+1) Create storageclass grafana with retain in Karbon UI
 1) kubectl create namespace monitoring
 2) kubectl create -f 1-grafana-datasource-config.yaml
 3) kubectl create -f 2-deployment.yaml
