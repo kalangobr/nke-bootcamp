@@ -1,7 +1,7 @@
 1) kubectl create namespace monitoring
-2) kubectl create -f grafana-datasource-config.yaml
-3) kubectl create -f deployment.yaml
-4) kubectl create -f service.yaml
+2) kubectl create -f 1-grafana-datasource-config.yaml
+3) kubectl create -f 2-deployment.yaml
+4) kubectl create -f 3-service.yaml
 5) try access: http://<your-node-ip>:32000
 - User admin Pass admin
 6) Import grafana template 6417, 13646
