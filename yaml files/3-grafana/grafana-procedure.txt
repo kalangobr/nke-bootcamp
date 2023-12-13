@@ -4,7 +4,7 @@
 4) kubectl create -f 3-service.yaml
 5) try access: http://<your-node-ip>:32000
 - User admin Pass admin
-6) Import grafana template 6417, 13646
+6) Import grafana template 10695_rev1.json and 12660_rev1.json
 
 
 Referências:
