@@ -1,0 +1,13 @@
+1) Create Storage Class wordpress by Karbon UI
+
+# SSH Access in API Endpoint
+sudo docker login
+kubectl create namespace wordpress
+sudo kubectl -n wordpress create secret generic nkereg --from-file=.dockerconfigjson=/root/.docker/config.json --type=kubernetes.io/dockerconfigjson
+kubectl -n wordpress create secret generic mysql-pass --from-literal=password=Karbon/4u
+
+# Jumpbox
+kubectl -n wordpress apply -f 1-mysql-deployment.yaml -f 2-wordpress-deployment
+kubectl -n wordpress get all
+kubectl -n wordpress get pvc
+kubectl -n wordpress edit pvc pvcname
