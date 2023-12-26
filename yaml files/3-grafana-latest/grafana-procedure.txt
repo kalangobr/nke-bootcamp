@@ -1,14 +1,14 @@
 1) Create storageclass grafana with retain in Karbon UI
-1) kubectl create namespace monitoring
-2) kubectl create -f 1-grafana-datasource-config.yaml
-3) kubectl create -f 2-deployment.yaml
-4) kubectl create -f 3-service.yaml
-5) kubectl -n monitoring get pods
-6) kubectl -n monitoring get svc
-7) kubectl -n monitoring get pvc
-8) try access: http://<your-node-ip>:32000
+2) kubectl create namespace monitoring
+3) kubectl create -f 1-grafana-datasource-config.yaml
+4) kubectl create -f 2-deployment.yaml
+5) kubectl create -f 3-service.yaml
+6) kubectl -n monitoring get pods
+7) kubectl -n monitoring get svc
+8) kubectl -n monitoring get pvc
+9) try access: http://<your-node-ip>:32000
 - User admin Pass admin
-9) Import grafana template 10695_rev1.json and 11455_rev6.json
+10) Import grafana template 10695_rev1.json and 11455_rev6.json
 
 
 Referências:
