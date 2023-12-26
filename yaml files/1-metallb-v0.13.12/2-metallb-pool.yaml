@@ -5,4 +5,4 @@ metadata:
   name: first-pool
 spec:
   addresses:
-  - 10.42.61.176-10.42.61.178
+  - 10.38.238.XXX-10.38.238.XXX
