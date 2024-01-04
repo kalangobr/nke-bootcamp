@@ -1,0 +1,82 @@
+Free Kasten K10 free and use it for up to 5 nodes, in your sandbox, on your own infrastructure or any cloud.
+
+Necessary packages in your JumpBox Linux to access your Kubernetes cluster:
+- curl, jq, kubectl setup with kubeconfig, and helm
+Attention!!
+In the end of documentation you can find the procedure.
+
+1) Verify the Nutanix CSI Snapshot Resources
+bash 1-verifycsisnapshot.sh
+# If there is no Nutanix CSI follow the step 2
+
+2) Create a Volume Snapshot Class
+bash 2-createvolumesnapshotclass.sh
+
+3) helm repo add kasten https://charts.kasten.io --force-update && helm repo update
+
+4) kubectl create namespace kasten-io
+
+5) kubectl annotate volumesnapshotclass default-snapshotclass k10.kasten.io/is-snapshot-class=true
+
+6) Run the following command to deploy the the pre-check tool. If everything is OK go to step 7:
+curl https://docs.kasten.io/tools/k10_primer.sh | bash
+
+7) Install Kasten With LoadBalancer. Metallb must be install before.
+helm install k10 kasten/k10 --namespace=kasten-io --set global.persistence.storageClass=kasten-io --set externalGateway.create=true --set auth.tokenAuth.enabled=true
+
+8) Validating the Install - Everything must be running.
+kubectl -n kasten-io get pods kasten-io --watch
+kubectl -n kasten-io get pods kasten-io
+kubectl -n kasten-io get svc kasten-io
+
+9) Try access: http://LoadBalancerIP/k10/#/
+- To access do you need to use the token from the kubernetes cluster kubeconfig.
+Example:
+- name: default-user-k8s-bila1
+  user:
+    token: eyJ0eXAiOiJKV1QiLCJhbGciOiJSUzI1NiJ9.eyJ1c2VyX3Byb2ZpbGUiOiJ7XCJhdXRoX2luZm9cIjp7XCJyZW1vdGVfYXV0aF9qc29uXCI6XCJcIixcInJlbW90ZV9hdXRob3JpemF0aW9uXCI6XCJcIixcInRlbmFudF91dWlkXCI6XCIwMDAwMDAwMC0wMDAwLTAwMDAtMDAwMC0wMDAwMDAwMDAwMDBcIixcInRva2VuX2F1ZGllbmNlXCI6XCJcIixcInRva2VuX2lzc3VlclwiOlwiXCIsXCJ1c2VyX2dyb3VwX3V1aWRzXCI6W10sXCJ1c2VyX3V1aWRcIjpcIjAwMDAwMDAwLTAwMDAtMDAwMC0wMDAwLTAwMDAwMDAwMDAwMFwiLFwidXNlcm5hbWVcIjpcImFkbWluXCJ9LFwiYXV0aGVudGljYXRlZFwiOnRydWUsXCJkb21haW5cIjpcIlwiLFwiZ3JvdXBzXCI6W1wic3lzdGVtOm1hc3RlcnNcIl0sXCJsZWdhY3lfYWRtaW5fYXV0aG9yaXRpZXNcIjpbXCJST0xFX0NMVVNURVJfQURNSU5cIixcIlJPTEVfQ0xVU1RFUl9WSUVXRVJcIixcIlJPTEVfVVNFUl9BRE1JTlwiXSxcInVpZFwiOlwiMDAwMDAwMDAtMDAwMC0wMDAwLTAwMDAtMDAwMDAwMDAwMDAwXCIsXCJ1c2VybmFtZVwiOlwiYWRtaW5cIixcInVzZXJ0eXBlXCI6XCJsb2NhbFwifSIsImp0aSI6IjMzYTg5Zjg0LTczNDItMzBjOS1hY2ZiLTJkNDlhMWExODQ1YiIsImlzcyI6IkF0aGVuYSIsImlhdCI6MTcwNDI5NzkzNSwiZXhwIjoxNzA0Mzg0MzM1fQ.VBLhHIie5eIx_BvMw_wLQmkyqPCKAqJ1u3NpbOSmvDkrNc4Bt0qTX6_yPVC1FOPcNuupSVS6NPZ7t32cwLcmZ0VjoqAz2lA4fg4Y3wz7SLWklK3lHqhkeZAH8BaDAhVi33JhQpaM5pjVaiZs-PizW8nwIATSaYKUUDjUBMLvnpfePj4U5JO-mroV35LPJtBnF7NlZbh4Q3x-0hi5WxLEOx4ibhn0NkG6k2WeqPXmYI00AkdxlO3eFGt-lW65oBzjkSAMcIrzPZkwkGUP8vrWWDULkigwRI1TPZz9MSsKUJ4y_jwLzY8L300uleMA60tSxPI8efOTANXlx0U8QP9Fyg
+
+
+10) If necessary do troubleshooting using describe.
+kubectl -n kasten-io get pods
+kubectl -n kasten-io describe pods PODNAMEHERE
+
+References to install necessary package:
+# curl and jq
+yum install -y curl jq
+
+# Kubectl
+https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/
+---------------------------------------------------------------------------
+cat <<EOF | sudo tee /etc/yum.repos.d/kubernetes.repo
+[kubernetes]
+name=Kubernetes
+baseurl=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/
+enabled=1
+gpgcheck=1
+gpgkey=https://pkgs.k8s.io/core:/stable:/v1.28/rpm/repodata/repomd.xml.key
+EOF
+sudo yum install -y kubectl bash-completion
+yum install -y bash-completion	
+source /usr/share/bash-completion/bash_completion
+echo 'source <(kubectl completion bash)' >>~/.bashrc
+echo 'alias k=kubectl' >>~/.bashrc
+echo 'complete -o default -F __start_kubectl k' >>~/.bashrc
+source ~/.bashrc
+---------------------------------------------------------------------------
+
+# Helm
+https://helm.sh/docs/intro/install/
+---------------------------------------------------------------------------
+curl -fsSL -o get_helm.sh https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3
+chmod 700 get_helm.sh
+./get_helm.sh
+---------------------------------------------------------------------------
+
+
+References:
+https://docs.kasten.io/latest/install/other/other.html#prerequisites
+https://docs.kasten.io/latest/install/other/other.html
+https://www.nutanix.dev/2021/07/20/cloud-native-application-data-protection-using-kasten-k10-and-nutanix-karbon-a-practical-guide/
+
+

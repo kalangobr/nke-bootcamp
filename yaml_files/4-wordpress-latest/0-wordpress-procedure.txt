@@ -5,6 +5,14 @@
 5) kubectl -n wordpress apply -f 1-mysql-deployment.yaml -f 2-wordpress-deployment
 6) kubectl -n wordpress get pods
 7) kubectl -n wordpress get svc
-8) kubectl -n wordpress get all
-9) kubectl -n wordpress get pvc
-10) kubectl -n wordpress edit pvc pvcname
+8) try access: http://LoadBalancerIP
+
+9) If necessary do troubleshooting using describe.
+kubectl -n wordpress get pods
+kubectl -n wordpress describe pods PODNAMEHERE
+
+10) Procedure to increase pvc:
+kubectl -n wordpress get pvc
+kubectl -n wordpress edit pvc pvcname
+
+

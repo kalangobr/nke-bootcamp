@@ -1,0 +1,17 @@
+1) kubectl apply -f 1-kubernetes-dashboard-loadbalancer
+
+2) kubectl -n kubernetes-dashboard get pods --watch
+
+3) kubectl -n kubernetes-dashboard get all
+
+4) kubectl -n kubernetes-dashboard get svc
+
+5) try access: https://LoadBalancerIP
+- Lad the kubeconfig for login in you Kubernetes-Dashboard.
+
+6) If necessary do troubleshooting using describe.
+
+kubectl -n kubernetes-dashboard get pods
+kubectl -n kubernetes-dashboard describe pods PODNAMEHERE
+
+

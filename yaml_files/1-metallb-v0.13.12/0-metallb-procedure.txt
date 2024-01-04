@@ -1,0 +1,20 @@
+1) Change the addresss range for the first pool in te file 2-metallb-pool.
+  addresses:
+  - 10.38.238.XXX-10.38.238.XXX --> Change this range for your address range for Metallb.
+
+2) kubectl apply -f 1-metallb-native.yaml
+
+3) kubectl apply -f 2-metallb-pool.yaml
+
+4) kubectl apply -f 3-metallb-l2advertisement.yaml
+
+- Check if everything is running and health
+
+5) kubectl -n metallb-system get pods --watch
+
+6) kubectl -n metallb-system get all
+
+7) If necessary do troubleshooting using describe.
+
+kubectl -n metallb-system get pods
+kubectl -n metallb-system describe pods PODNAMEHERE

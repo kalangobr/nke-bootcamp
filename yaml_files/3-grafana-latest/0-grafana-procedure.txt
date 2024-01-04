@@ -10,6 +10,12 @@
 - User admin Pass admin
 10) Import grafana template 10695_rev1.json and 11455_rev6.json
 
+11) If necessary do troubleshooting using describe.
+
+kubectl -n monitoring get pods
+kubectl -n monitoring describe pods PODNAMEHERE
+
 
 Referências:
 https://devopscube.com/setup-grafana-kubernetes/
+
