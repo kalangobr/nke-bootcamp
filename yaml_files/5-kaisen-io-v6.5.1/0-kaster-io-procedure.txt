@@ -27,9 +27,9 @@ curl https://docs.kasten.io/tools/k10_primer.sh | bash
 helm install k10 kasten/k10 --namespace=kasten-io --set global.persistence.storageClass=kasten-io --set externalGateway.create=true --set auth.tokenAuth.enabled=true
 
 9) Validating the Install - Everything must be running.
-kubectl -n kasten-io get pods kasten-io --watch
-kubectl -n kasten-io get pods kasten-io
-kubectl -n kasten-io get svc kasten-io
+kubectl -n kasten-io get pods --watch
+kubectl -n kasten-io get pods 
+kubectl -n kasten-io get svc
 
 10) Try access: http://LoadBalancerIP/k10/#/
 - To access do you need to use the token from the kubernetes cluster kubeconfig.
